@@ -1,0 +1,17 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+end	solution.cpp	/^	int end;$/;"	m	struct:thread_parameter	file:	access:public
+is_safe	solution.cpp	/^bool is_safe(vector<vector<int> > solution,int x,int y)\/\/判断能否在(x,y)放置皇后$/;"	f	signature:(vector<vector<int> > solution,int x,int y)
+main	solution.cpp	/^int main()$/;"	f	signature:()
+solve	solution.cpp	/^void solve(vector<vector<int> > solution,int n,int start,int end)$/;"	f	signature:(vector<vector<int> > solution,int n,int start,int end)
+solve_n_queens	solution.cpp	/^void solve_n_queens(int n,int thread_number)$/;"	f	signature:(int n,int thread_number)
+start	solution.cpp	/^	int start;$/;"	m	struct:thread_parameter	file:	access:public
+thread_function	solution.cpp	/^void * thread_function(void * p)$/;"	f	signature:(void * p)
+thread_function	solution.cpp	/^void * thread_function(void *);$/;"	p	file:	signature:(void *)
+thread_parameter	solution.cpp	/^struct thread_parameter$/;"	s	file:
+thread_parameter::end	solution.cpp	/^	int end;$/;"	m	struct:thread_parameter	file:	access:public
+thread_parameter::start	solution.cpp	/^	int start;$/;"	m	struct:thread_parameter	file:	access:public
