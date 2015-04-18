@@ -153,10 +153,12 @@ int main()
 	float timeuse;
 	pthread_mutex_init(&stdio_mutex,NULL);
 	pthread_mutex_init(&stdio_mutex,NULL);
+
     cout<<"please input how many queens are there?"<<endl;
     cin>>n;
 	cout<<"please input how many threads to create?"<<endl;
 	cin>>thread_number;
+
 	gettimeofday(&start,NULL);
     solve_n_queens(n,thread_number);
 	gettimeofday(&finish,NULL);
