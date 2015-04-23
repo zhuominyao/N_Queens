@@ -1,23 +1,22 @@
 #include <iostream>
 #include <vector>
-#include <sys/time.h>
 
 using namespace std;
 
 int count = 0;
 
-bool is_safe(vector<vector<int> > solution,int x,int y)
+bool is_safe(vector<vector<int> > solution,int x,int y)//判断能否在(x,y)放置皇后
 {
     int n = solution.size();
-    for(int i = 0;i < y;i++)
+    for(int i = 0;i < y;i++)//判断当前位置所在的列有没有皇后
         if(solution[x][i] == 1)
             return false;
 
-    for(int i = x-1,j = y-1;i >= 0 && j >= 0;i--,j--)
+    for(int i = x-1,j = y-1;i >= 0 && j >= 0;i--,j--)//判断左上角有没有皇后
         if(solution[i][j] == 1)
             return false;
 
-    for(int i = x+1,j = y-1;i < n && j >= 0;i++,j--)
+    for(int i = x+1,j = y-1;i < n && j >= 0;i++,j--)//判断左下角有没有皇后
         if(solution[i][j] == 1)
             return false;
 
@@ -26,9 +25,10 @@ bool is_safe(vector<vector<int> > solution,int x,int y)
 
 void solve(vector<vector<int> > solution,int n)
 {
-    if(n == solution.size())
+    if(n == 2)
     {
 		count++;
+		/*
         for(int i = 0;i < solution.size();i++)
         {
             for(int j = 0;j < solution.size();j++)
@@ -36,6 +36,7 @@ void solve(vector<vector<int> > solution,int n)
             cout<<endl;
         }
         cout<<endl;
+		*/
         return;
     }
     else
@@ -63,21 +64,13 @@ void solve_n_queens(int n)
     solve(solution,0);
 }
 
+
 int main()
 {
-    cout << "please input how many queens are there?" << endl;
-    int n;
-	struct timeval start,finish;
-	float timeuse;
-    cin>>n;
-
-	gettimeofday(&start,NULL);
-    solve_n_queens(n);
-	gettimeofday(&finish,NULL);
-	timeuse = 1000000*(finish.tv_sec - start.tv_sec) + (finish.tv_usec - start.tv_usec);
-	cout<<(timeuse/1000000)<<" seconds"<<endl;
-
-	cout<<"there is "<<count<<" ways"<<endl;
-    return 0;
+	for(int i = 8;i < 21;i++)
+	{
+		solve_n_queens(i);
+		cout<<i<<":"<<count<<endl;
+		count = 0;
+	}
 }
-

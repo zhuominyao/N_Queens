@@ -4,14 +4,74 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+COMPUTER_NUMBER	distribution.cpp	/^const int COMPUTER_NUMBER = 1;$/;"	v
+MAX_LENGTH	calculation.cpp	/^const int MAX_LENGTH = 512;$/;"	v
+PORT_NUMBER	calculation.cpp	/^const int PORT_NUMBER = 10001;$/;"	v
+PORT_NUMBER	distribution.cpp	/^const int PORT_NUMBER = 10001;$/;"	v
+REPEAT_TIME	solution.cpp	11;"	d	file:
+THREAD_NUMBER	calculation.cpp	/^const int THREAD_NUMBER = 4;$/;"	v
+count	count_way.cpp	/^int count = 0;$/;"	v
+count	solution.cpp	/^long count = 0;$/;"	v
+count_mutex	solution.cpp	/^pthread_mutex_t count_mutex;$/;"	v
+distribution	distribution.cpp	/^void distribution(int n,int computer_number)\/\/n皇后,computer_number个计算机求解$/;"	f	signature:(int n,int computer_number)
 end	solution.cpp	/^	int end;$/;"	m	struct:thread_parameter	file:	access:public
+find_all_statue	distribution.cpp	/^void find_all_statue(vector<statue> & statue_vec,int n)$/;"	f	signature:(vector<statue> & statue_vec,int n)
+get_p	calculation.cpp	/^void get_p(FILE * fr,struct parameter & p)$/;"	f	signature:(FILE * fr,struct parameter & p)
+get_p	calculation.cpp	/^void get_p(FILE * fr,struct parameter & p);$/;"	p	file:	signature:(FILE * fr,struct parameter & p)
+is_safe	calculation.cpp	/^bool is_safe(vector<vector<int> > solution,int x,int y)\/\/判断能否在(x,y)放置皇后$/;"	f	signature:(vector<vector<int> > solution,int x,int y)
+is_safe	count_way.cpp	/^bool is_safe(vector<vector<int> > solution,int x,int y)\/\/判断能否在(x,y)放置皇后$/;"	f	signature:(vector<vector<int> > solution,int x,int y)
+is_safe	distribution.cpp	/^bool is_safe(vector<vector<int> > solution,int x,int y)\/\/判断能否在(x,y)放置皇后$/;"	f	signature:(vector<vector<int> > solution,int x,int y)
 is_safe	solution.cpp	/^bool is_safe(vector<vector<int> > solution,int x,int y)\/\/判断能否在(x,y)放置皇后$/;"	f	signature:(vector<vector<int> > solution,int x,int y)
+main	calculation.cpp	/^int main()$/;"	f	signature:()
+main	count_way.cpp	/^int main()$/;"	f	signature:()
+main	distribution.cpp	/^int main()$/;"	f	signature:()
 main	solution.cpp	/^int main()$/;"	f	signature:()
-solve	solution.cpp	/^void solve(vector<vector<int> > solution,int n,int start,int end)$/;"	f	signature:(vector<vector<int> > solution,int n,int start,int end)
-solve_n_queens	solution.cpp	/^void solve_n_queens(int n,int thread_number)$/;"	f	signature:(int n,int thread_number)
+n	solution.cpp	/^	int n;$/;"	m	struct:thread_parameter	file:	access:public
+p	calculation.cpp	/^struct parameter p;$/;"	v	typeref:struct:parameter
+p	distribution.cpp	/^vector<parameter> p(COMPUTER_NUMBER);\/\/要传给各计算机的参数$/;"	p	file:	signature:(COMPUTER_NUMBER)
+parameter	calculation.cpp	/^struct parameter$/;"	s	file:
+parameter	distribution.cpp	/^struct parameter$/;"	s	file:
+parameter::statues	calculation.cpp	/^	vector<statue> statues;$/;"	m	struct:parameter	file:	access:public
+parameter::statues	distribution.cpp	/^	vector<struct statue> statues;$/;"	m	struct:parameter	file:	access:public
+point	calculation.cpp	/^struct point$/;"	s	file:
+point	distribution.cpp	/^struct point$/;"	s	file:
+point::x	calculation.cpp	/^	int x;$/;"	m	struct:point	file:	access:public
+point::x	distribution.cpp	/^	int x;$/;"	m	struct:point	file:	access:public
+point::y	calculation.cpp	/^	int y;$/;"	m	struct:point	file:	access:public
+point::y	distribution.cpp	/^	int y;$/;"	m	struct:point	file:	access:public
+point_1	calculation.cpp	/^	struct point point_1;$/;"	m	struct:statue	typeref:struct:statue::point	file:	access:public
+point_1	distribution.cpp	/^	struct point point_1;\/\/第一列的点$/;"	m	struct:statue	typeref:struct:statue::point	file:	access:public
+point_2	calculation.cpp	/^	struct point point_2;$/;"	m	struct:statue	typeref:struct:statue::point	file:	access:public
+point_2	distribution.cpp	/^	struct point point_2;\/\/第二列的点$/;"	m	struct:statue	typeref:struct:statue::point	file:	access:public
+search	distribution.cpp	/^void search(vector<vector<int> > solution,int n,vector<point> points,vector<statue> & statue_vec)$/;"	f	signature:(vector<vector<int> > solution,int n,vector<point> points,vector<statue> & statue_vec)
+search	distribution.cpp	/^void search(vector<vector<int> >,int,vector<point>,vector<statue> &);$/;"	p	file:	signature:(vector<vector<int> >,int,vector<point>,vector<statue> &)
+solve	count_way.cpp	/^void solve(vector<vector<int> > solution,int n)$/;"	f	signature:(vector<vector<int> > solution,int n)
+solve	solution.cpp	/^void solve(vector<vector<int> > solution,int n)$/;"	f	signature:(vector<vector<int> > solution,int n)
+solve_n_queens	count_way.cpp	/^void solve_n_queens(int n)$/;"	f	signature:(int n)
+solve_n_queens	solution.cpp	/^void solve_n_queens(int n)$/;"	f	signature:(int n)
+solve_n_queens_with_multithread	calculation.cpp	/^void solve_n_queens_with_multithread()$/;"	f	signature:()
+solve_n_queens_with_multithread	calculation.cpp	/^void solve_n_queens_with_multithread();$/;"	p	file:	signature:()
+solve_n_queens_with_multithread	solution.cpp	/^void solve_n_queens_with_multithread(int n,int thread_number)$/;"	f	signature:(int n,int thread_number)
+solve_with_multithread	solution.cpp	/^void solve_with_multithread(vector<vector<int> > solution,int n,int start,int end)$/;"	f	signature:(vector<vector<int> > solution,int n,int start,int end)
 start	solution.cpp	/^	int start;$/;"	m	struct:thread_parameter	file:	access:public
+statue	calculation.cpp	/^struct statue$/;"	s	file:
+statue	distribution.cpp	/^struct statue$/;"	s	file:
+statue::point_1	calculation.cpp	/^	struct point point_1;$/;"	m	struct:statue	typeref:struct:statue::point	file:	access:public
+statue::point_1	distribution.cpp	/^	struct point point_1;\/\/第一列的点$/;"	m	struct:statue	typeref:struct:statue::point	file:	access:public
+statue::point_2	calculation.cpp	/^	struct point point_2;$/;"	m	struct:statue	typeref:struct:statue::point	file:	access:public
+statue::point_2	distribution.cpp	/^	struct point point_2;\/\/第二列的点$/;"	m	struct:statue	typeref:struct:statue::point	file:	access:public
+statues	calculation.cpp	/^	vector<statue> statues;$/;"	m	struct:parameter	file:	access:public
+statues	calculation.cpp	/^	vector<statue> statues;$/;"	m	struct:thread_parameter	file:	access:public
+statues	distribution.cpp	/^	vector<struct statue> statues;$/;"	m	struct:parameter	file:	access:public
 thread_function	solution.cpp	/^void * thread_function(void * p)$/;"	f	signature:(void * p)
 thread_function	solution.cpp	/^void * thread_function(void *);$/;"	p	file:	signature:(void *)
+thread_parameter	calculation.cpp	/^struct thread_parameter$/;"	s	file:
 thread_parameter	solution.cpp	/^struct thread_parameter$/;"	s	file:
 thread_parameter::end	solution.cpp	/^	int end;$/;"	m	struct:thread_parameter	file:	access:public
+thread_parameter::n	solution.cpp	/^	int n;$/;"	m	struct:thread_parameter	file:	access:public
 thread_parameter::start	solution.cpp	/^	int start;$/;"	m	struct:thread_parameter	file:	access:public
+thread_parameter::statues	calculation.cpp	/^	vector<statue> statues;$/;"	m	struct:thread_parameter	file:	access:public
+x	calculation.cpp	/^	int x;$/;"	m	struct:point	file:	access:public
+x	distribution.cpp	/^	int x;$/;"	m	struct:point	file:	access:public
+y	calculation.cpp	/^	int y;$/;"	m	struct:point	file:	access:public
+y	distribution.cpp	/^	int y;$/;"	m	struct:point	file:	access:public
