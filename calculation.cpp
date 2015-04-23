@@ -70,12 +70,16 @@ int main()
 	}
 
 	bzero((void*)&saddr,sizeof(saddr));
-	gethostname(hostname,MAX_LENGTH);
+	gethostname(hostname,MAX_LENGTH);	
 	hp = gethostbyname(hostname);
 
 	bcopy((void*)hp->h_addr,(void*)&saddr.sin_addr,hp->h_length);
 	saddr.sin_family = AF_INET;
 	saddr.sin_port = htons(PORT_NUMBER);
+
+	cout<<"hostname:"<<hostname<<endl;
+	cout<<"address:"<<inet_ntoa(saddr.sin_addr)<<endl;
+	cout<<"port:"<<PORT_NUMBER<<endl;
 
 	if(bind(server_socket_id,(struct sockaddr *)&saddr,sizeof(saddr)) != 0)
 	{

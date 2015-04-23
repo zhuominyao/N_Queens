@@ -175,6 +175,9 @@ int main()
 		servaddr.sin_addr.s_addr = inet_addr(ip[i]);
 		//cout<<inet_ntoa(servaddr.sin_addr)<<endl;
 
+		cout<<"address:"<<inet_ntoa(servaddr.sin_addr)<<endl;
+		cout<<"port:"<<PORT_NUMBER<<endl;
+
 		if(connect(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr)) != 0)
 		{
 			cout<<"connect error"<<endl;
