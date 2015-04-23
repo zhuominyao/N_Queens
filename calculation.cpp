@@ -73,8 +73,8 @@ int main()
 	gethostname(hostname,MAX_LENGTH);	
 	hp = gethostbyname(hostname);
 
-	//bcopy((void*)hp->h_addr,(void*)&saddr.sin_addr,hp->h_length);
-	saddr.sin_addr.s_addr = inet_addr("112.74.105.60");
+	bcopy((void*)hp->h_addr_list[1],(void*)&saddr.sin_addr,hp->h_length);
+	//saddr.sin_addr.s_addr = inet_addr("112.74.105.60");
 	saddr.sin_family = AF_INET;
 	saddr.sin_port = htons(PORT_NUMBER);
 
@@ -115,7 +115,7 @@ int main()
 	solve_n_queens_with_multithread();
 	gettimeofday(&end,NULL);
 	multi_thread_timeuse = 1000000*(end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec);
-	cout<<"time use:"<<multi_thread_timeuse/1000000;
+	cout<<"time use:"<<multi_thread_timeuse/1000000<<endl;
 }
 
 void solve_n_queens_with_multithread()
