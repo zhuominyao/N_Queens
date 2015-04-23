@@ -29,7 +29,7 @@ struct parameter
 };
 
 const int COMPUTER_NUMBER = 1;
-const int PORT_NUMBER = 10001;
+const int PORT_NUMBER = 10000;
 vector<parameter> p(COMPUTER_NUMBER);//要传给各计算机的参数
 
 void search(vector<vector<int> >,int,vector<point>,vector<statue> &);

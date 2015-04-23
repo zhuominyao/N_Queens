@@ -12,7 +12,7 @@
 
 using namespace std;
 
-const int PORT_NUMBER = 10001;
+const int PORT_NUMBER = 10000;
 const int MAX_LENGTH = 512;
 const int THREAD_NUMBER = 4;
 
