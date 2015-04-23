@@ -72,15 +72,6 @@ void search(vector<vector<int> > solution,int n,vector<point> points,vector<stat
 		new_statue.point_1 = points[0];//此时points里一定有两个point
 		new_statue.point_2 = points[1];
 		statue_vec.push_back(new_statue);
-		/*
-        for(int i = 0;i < solution.size();i++)
-        {
-            for(int j = 0;j < solution.size();j++)
-                cout<<solution[i][j]<<" ";
-            cout<<endl;
-        }
-        cout<<endl;
-		*/
         return;
     }
     else
