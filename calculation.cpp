@@ -73,8 +73,14 @@ int main()
 	gethostname(hostname,MAX_LENGTH);	
 	hp = gethostbyname(hostname);
 
-	bcopy((void*)hp->h_addr_list[0],(void*)&saddr.sin_addr,hp->h_length);
-	//saddr.sin_addr.s_addr = inet_addr("112.74.105.60");
+	//bcopy((void*)hp->h_addr_list[0],(void*)&saddr.sin_addr,hp->h_length);
+	cout<<hp->h_addr_list[1][0];
+	cout<<hp->h_addr_list[1][1];
+	cout<<hp->h_addr_list[1][2];
+	cout<<hp->h_addr_list[1][3];
+	cout<<endl;
+
+	saddr.sin_addr.s_addr = inet_addr("112.74.105.60");
 	saddr.sin_family = AF_INET;
 	saddr.sin_port = htons(PORT_NUMBER);
 
