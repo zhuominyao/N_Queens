@@ -89,11 +89,15 @@ int main()
 		exit(-1);
 	}
 
+	cout<<"listenning..."<<endl;
+
 	if((fd = accept(server_socket_id,NULL,NULL)) < 0)
 	{
 		cout<<"accept error"<<endl;
 		exit(-1);
 	}
+
+	cout<<"accept connection"<<endl;
 
 
 	fr = fdopen(fd,"r");
