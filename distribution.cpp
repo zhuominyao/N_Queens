@@ -189,7 +189,7 @@ int main()
 			char addressBuffer[INET_ADDRSTRLEN];
 			inet_ntop(AF_INET, tmpAddrPtr, addressBuffer, INET_ADDRSTRLEN);
 			//得到外网的ip
-			if(strcmp(ifAddrStruct->ifa_name,"eth0") == 0)
+			if(strcmp(ifAddrStruct->ifa_name,"eth1") == 0)
 			{
 				//cout<<"ipaddress:"<<addressBuffer<<endl;
 				saddr.sin_addr.s_addr = inet_addr(addressBuffer);
@@ -199,7 +199,7 @@ int main()
 		ifAddrStruct=ifAddrStruct->ifa_next;
 	}
 	saddr.sin_family = AF_INET;
-	saddr.sin_port = htons(PORT_NUMBER);
+	saddr.sin_port = htons(SERVER_PORT_NUMBER);
 
 	
 	
