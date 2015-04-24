@@ -170,7 +170,7 @@ void solve_n_queens_with_multithread()
 
 	cout<<"count:"<<count<<endl;
 	int sockfd = socket(AF_INET,SOCK_STREAM,0);
-	//addr.sin_addr.s_addr = inet_addr("192.201.0.214");
+	addr.sin_addr.s_addr = inet_addr("112.74.88.139");
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(SERVER_PORT_NUMBER);
 	cout<<"count send back address:"<<inet_ntoa(addr.sin_addr)<<endl;
