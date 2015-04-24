@@ -9,6 +9,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <semaphore.h>
+#include <ifaddrs.h>
+#include <sys/types.h>
+#include <netinet/in.h>
 
 using namespace std;
 
@@ -74,8 +77,30 @@ int main()
 	hp = gethostbyname(hostname);
 
 	//bcopy((void*)hp->h_addr_list[0],(void*)&saddr.sin_addr,hp->h_length);
+	struct ifaddrs * ifAddrStruct = NULL;
+	void * tmpAddrPtr = NULL;
 
-	saddr.sin_addr.s_addr = inet_addr("120.25.208.169");
+	getifaddrs(&ifAddrStruct);
+
+	while(ifAddrStruct != NULL)
+	{
+		if(ifAddrStruct->ifa_addr->sa_family == AF_INET)
+		{
+			tmpAddrPtr = &((struct sockaddr_in *)ifAddrStruct->ifa_addr)->sin_addr;
+			char addressBuffer[INET_ADDRSTRLEN];
+			inet_ntop(AF_INET, tmpAddrPtr, addressBuffer, INET_ADDRSTRLEN);
+			if(strcmp(ifAddrStruct->ifa_name,"eth1") == 0)
+			{
+				cout<<"ipaddress:"<<addressBuffer<<endl;
+				saddr.sin_addr.s_addr = inet_addr(addressBuffer);
+				break;
+			}
+			//printf("%s IP Address %s\n", ifAddrStruct->ifa_name, addressBuffer);
+		}
+		ifAddrStruct=ifAddrStruct->ifa_next;
+	}
+
+	//saddr.sin_addr.s_addr = inet_addr("120.25.208.169");
 	saddr.sin_family = AF_INET;
 	saddr.sin_port = htons(PORT_NUMBER);
 
