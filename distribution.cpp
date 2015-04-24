@@ -174,6 +174,7 @@ int main()
 	int sockfd;
 	struct sockaddr_in servaddr;
 
+	//获得计算结果申请的socket
 	struct sockaddr_in saddr;
 	struct ifaddrs * ifAddrStruct = NULL;
 	void * tmpAddrPtr = NULL;
@@ -200,8 +201,7 @@ int main()
 	saddr.sin_family = AF_INET;
 	saddr.sin_port = htons(PORT_NUMBER);
 
-	pthread_t tid;
-	pthread_create(&tid,NULL,thread_function,NULL);
+	
 	
 	if(bind(server_socket_id,(struct sockaddr *)&saddr,sizeof(saddr)) != 0)
 	{
@@ -214,6 +214,9 @@ int main()
 		cout<<"listen error"<<endl;
 		exit(-1);
 	}
+
+	pthread_t tid;
+	pthread_create(&tid,NULL,thread_function,NULL);
 
 	for(int i = 0;i < COMPUTER_NUMBER;i++)
 	{
@@ -258,6 +261,7 @@ void * thread_function(void * p)
 
 	for(int i = 0;i < COMPUTER_NUMBER;i++)
 	{
+		cout<<"thread running"<<endl;
 		if((fd = accept(server_socket_id,NULL,NULL)) < 0)
 		{
 			cout<<"accept error"<<endl;
