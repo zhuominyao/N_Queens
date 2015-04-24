@@ -190,5 +190,6 @@ int main()
 			fprintf(fw,"%d %d %d %d\n",p[i].statues[j].point_1.x,p[i].statues[j].point_1.y,p[i].statues[j].point_2.x,p[i].statues[j].point_2.y);
 		}
 		fclose(fw);
+		cout<<endl;
 	}
 }
