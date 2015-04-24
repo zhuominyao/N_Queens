@@ -16,11 +16,15 @@
 using namespace std;
 
 const int PORT_NUMBER = 10000;
+const int SERVER_PORT_NUMBER = 10001;
 const int MAX_LENGTH = 512;
 const int THREAD_NUMBER = 4;
 
-int count = 0;
+long count = 0;
 int queen_number = 8;
+int fd;
+struct sockaddr_in addr;
+socklen_t len;
 
 pthread_mutex_t stdio_mutex;
 pthread_mutex_t count_mutex;
@@ -61,9 +65,7 @@ int main()
 	struct hostent * hp;
 	char hostname[MAX_LENGTH];
 	int server_socket_id;
-	int fd;
 	FILE * fr;
-	
 
 	server_socket_id = socket(AF_INET,SOCK_STREAM,0);
 	if(server_socket_id == -1)
@@ -81,7 +83,6 @@ int main()
 	void * tmpAddrPtr = NULL;
 
 	getifaddrs(&ifAddrStruct);
-
 	while(ifAddrStruct != NULL)
 	{
 		if(ifAddrStruct->ifa_addr->sa_family == AF_INET)
@@ -89,18 +90,16 @@ int main()
 			tmpAddrPtr = &((struct sockaddr_in *)ifAddrStruct->ifa_addr)->sin_addr;
 			char addressBuffer[INET_ADDRSTRLEN];
 			inet_ntop(AF_INET, tmpAddrPtr, addressBuffer, INET_ADDRSTRLEN);
+			//得到外网的ip
 			if(strcmp(ifAddrStruct->ifa_name,"eth1") == 0)
 			{
-				cout<<"ipaddress:"<<addressBuffer<<endl;
+				//cout<<"ipaddress:"<<addressBuffer<<endl;
 				saddr.sin_addr.s_addr = inet_addr(addressBuffer);
 				break;
 			}
-			//printf("%s IP Address %s\n", ifAddrStruct->ifa_name, addressBuffer);
 		}
 		ifAddrStruct=ifAddrStruct->ifa_next;
 	}
-
-	//saddr.sin_addr.s_addr = inet_addr("120.25.208.169");
 	saddr.sin_family = AF_INET;
 	saddr.sin_port = htons(PORT_NUMBER);
 
@@ -127,9 +126,9 @@ int main()
 		cout<<"accept error"<<endl;
 		exit(-1);
 	}
-
+	
+	getpeername(fd,(struct sockaddr *)&addr,&len);
 	cout<<"accept connection"<<endl;
-
 
 	fr = fdopen(fd,"r");
 	get_p(fr,p);
@@ -164,10 +163,26 @@ void solve_n_queens_with_multithread()
 		}
 		pthread_create(&tid_array[i],NULL,thread_function,thread_p);
 	}
+	
 	for(int i = 0;i < THREAD_NUMBER;i++)
 		pthread_join(tid_array[i],NULL);
 
 	cout<<"count:"<<count<<endl;
+	int sockfd = socket(AF_INET,SOCK_STREAM,0);
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(SERVER_PORT_NUMBER);
+	cout<<"count send back address:"<<inet_ntoa(addr.sin_addr)<<endl;
+	cout<<"count send back port:"<<SERVER_PORT_NUMBER<<endl;
+
+	if(connect(sockfd,(struct sockaddr *)&addr,sizeof(addr)) != 0)
+	{
+		cout<<"connect error"<<endl;
+		exit(-1);
+	}
+	FILE * fw = fdopen(sockfd,"w");
+	fprintf(fw,"%ld\n",count);
+	fflush(fw);
+	fclose(fw);
 }
 
 void * thread_function(void * p)
@@ -249,8 +264,6 @@ void get_p(FILE * fr,struct parameter & p)
 	int n;
 	fscanf(fr,"%d",&queen_number);
 	fscanf(fr,"%d",&n);
-	cout<<"n:"<<n<<endl;
-	//n = (queen_number - 1) * (queen_number - 2);
 
 	for(int i = 0;i < n;i++)
 	{

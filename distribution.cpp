@@ -6,6 +6,10 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include <stdlib.h>
+#include <netinet/in.h>
+#include <sys/types.h>
+#include <ifaddrs.h>
+#include <pthread.h>
 
 using namespace std;
 
@@ -28,11 +32,14 @@ struct parameter
 	vector<struct statue> statues;
 };
 
-const int COMPUTER_NUMBER = 2;
+int COMPUTER_NUMBER = 2;
 const int PORT_NUMBER = 10000;
+const int SERVER_PORT_NUMBER = 10001;
+int server_socket_id;
 vector<parameter> p(COMPUTER_NUMBER);//要传给各计算机的参数
 
 void search(vector<vector<int> >,int,vector<point>,vector<statue> &);
+void * thread_function(void*);
 
 void find_all_statue(vector<statue> & statue_vec,int n)
 {
@@ -113,7 +120,6 @@ void distribution(int n,int computer_number)//n皇后,computer_number个计算�
 	find_all_statue(statue_vec,n);
 
 	cout<<"there is "<<statue_vec.size()<<" legal statue"<<endl;
-
 	
 	for(int i = 0;i < statue_vec.size();i++)
 	{
@@ -151,11 +157,11 @@ int main()
 	int n;
 	cout<<"please input how many queens are there?"<<endl;
 	cin>>n;
-	distribution(n,COMPUTER_NUMBER);
 	FILE * fr = fopen("ip.txt","r");
-	
+	fscanf(fr,"%d",&COMPUTER_NUMBER);
+	distribution(n,COMPUTER_NUMBER);
 	//读取ip地址
-	char ip[COMPUTER_NUMBER][20];
+	char ip[COMPUTER_NUMBER][30];
 	for(int i = 0;i < COMPUTER_NUMBER;i++)
 	{
 		fscanf(fr,"%s",ip[i]);
@@ -168,7 +174,46 @@ int main()
 	int sockfd;
 	struct sockaddr_in servaddr;
 
-	cout<<"COMPUTER_NUMBER:"<<COMPUTER_NUMBER<<endl;
+	struct sockaddr_in saddr;
+	struct ifaddrs * ifAddrStruct = NULL;
+	void * tmpAddrPtr = NULL;
+	server_socket_id = socket(AF_INET,SOCK_STREAM,0);
+	bzero((void*)&saddr,sizeof(saddr));
+	getifaddrs(&ifAddrStruct);
+	while(ifAddrStruct != NULL)
+	{
+		if(ifAddrStruct->ifa_addr->sa_family == AF_INET)
+		{
+			tmpAddrPtr = &((struct sockaddr_in *)ifAddrStruct->ifa_addr)->sin_addr;
+			char addressBuffer[INET_ADDRSTRLEN];
+			inet_ntop(AF_INET, tmpAddrPtr, addressBuffer, INET_ADDRSTRLEN);
+			//得到外网的ip
+			if(strcmp(ifAddrStruct->ifa_name,"eth0") == 0)
+			{
+				//cout<<"ipaddress:"<<addressBuffer<<endl;
+				saddr.sin_addr.s_addr = inet_addr(addressBuffer);
+				break;
+			}
+		}
+		ifAddrStruct=ifAddrStruct->ifa_next;
+	}
+	saddr.sin_family = AF_INET;
+	saddr.sin_port = htons(PORT_NUMBER);
+
+	pthread_t tid;
+	pthread_create(&tid,NULL,thread_function,NULL);
+	
+	if(bind(server_socket_id,(struct sockaddr *)&saddr,sizeof(saddr)) != 0)
+	{
+		cout<<"bind error"<<endl;
+		exit(-1);
+	}
+
+	if(listen(server_socket_id,COMPUTER_NUMBER) != 0)
+	{
+		cout<<"listen error"<<endl;
+		exit(-1);
+	}
 
 	for(int i = 0;i < COMPUTER_NUMBER;i++)
 	{
@@ -192,14 +237,40 @@ int main()
 		FILE * fw = fdopen(sockfd,"w");
 		fprintf(fw,"%d\n",n);
 		fprintf(fw,"%d\n",p[i].statues.size());
-		for(int j = 0;i < p[i].statues.size();j++)
+		for(int j = 0;j < p[i].statues.size();j++)
 		{
-			cout<<"j:"<<j<<endl;
 			fprintf(fw,"%d %d %d %d\n",p[i].statues[j].point_1.x,p[i].statues[j].point_1.y,p[i].statues[j].point_2.x,p[i].statues[j].point_2.y);
 		}
-		cout<<"before fclose"<<endl;
 		fclose(fw);
-		cout<<"after fclose"<<endl;
 	}
-	cout<<"end"<<endl;
+
+	pthread_join(tid,NULL);
+}
+
+void * thread_function(void * p)
+{
+	int fd;
+	int computer_number = COMPUTER_NUMBER;
+	long count_array[COMPUTER_NUMBER];
+
+	for(int i = 0;i < COMPUTER_NUMBER;i++)
+		count_array[i] = 0;
+
+	for(int i = 0;i < COMPUTER_NUMBER;i++)
+	{
+		if((fd = accept(server_socket_id,NULL,NULL)) < 0)
+		{
+			cout<<"accept error"<<endl;
+			exit(-1);
+		}
+		FILE * fr = fdopen(fd,"r");
+		fscanf(fr,"%ld",&count_array[i]);
+		fclose(fr);
+	}
+
+	long sum = 0;
+	for(int i = 0;i < COMPUTER_NUMBER;i++)
+		sum = sum + count_array[i];
+
+	cout<<"there are "<<sum<<" kinds of different ways"<<endl;
 }
