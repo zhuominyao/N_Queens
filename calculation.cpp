@@ -129,6 +129,7 @@ int main()
 	
 	getpeername(fd,(struct sockaddr *)&addr,&len);
 	cout<<"accept connection"<<endl;
+	cout<<"address:"<<inet_ntoa(addr.sin_addr)<<endl;
 
 	fr = fdopen(fd,"r");
 	get_p(fr,p);
