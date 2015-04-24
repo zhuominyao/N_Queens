@@ -168,8 +168,11 @@ int main()
 	int sockfd;
 	struct sockaddr_in servaddr;
 
+	cout<<"COMPUTER_NUMBER:"<<COMPUTER_NUMBER<<endl;
+
 	for(int i = 0;i < COMPUTER_NUMBER;i++)
 	{
+		cout<<"i:"<<i<<endl;
 		sockfd = socket(AF_INET,SOCK_STREAM,0);
 		bzero(&servaddr,sizeof(servaddr));
 		servaddr.sin_family = AF_INET;
@@ -191,9 +194,12 @@ int main()
 		fprintf(fw,"%d\n",p[i].statues.size());
 		for(int j = 0;i < p[i].statues.size();j++)
 		{
+			cout<<"j:"<<j<<endl;
 			fprintf(fw,"%d %d %d %d\n",p[i].statues[j].point_1.x,p[i].statues[j].point_1.y,p[i].statues[j].point_2.x,p[i].statues[j].point_2.y);
 		}
+		cout<<"before fclose"<<endl;
 		fclose(fw);
-		cout<<endl;
+		cout<<"after fclose"<<endl;
 	}
+	cout<<"end"<<endl;
 }
