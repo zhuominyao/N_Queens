@@ -248,7 +248,8 @@ void get_p(FILE * fr,struct parameter & p)
 {
 	int n;
 	fscanf(fr,"%d",&queen_number);
-	n = (queen_number - 1) * (queen_number - 2);
+	fscanf(fr,"%d",&n);
+	//n = (queen_number - 1) * (queen_number - 2);
 
 	for(int i = 0;i < n;i++)
 	{

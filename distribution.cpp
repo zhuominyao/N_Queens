@@ -28,7 +28,7 @@ struct parameter
 	vector<struct statue> statues;
 };
 
-const int COMPUTER_NUMBER = 1;
+const int COMPUTER_NUMBER = 2;
 const int PORT_NUMBER = 10000;
 vector<parameter> p(COMPUTER_NUMBER);//要传给各计算机的参数
 
@@ -157,7 +157,10 @@ int main()
 	//读取ip地址
 	char ip[COMPUTER_NUMBER][20];
 	for(int i = 0;i < COMPUTER_NUMBER;i++)
+	{
 		fscanf(fr,"%s",ip[i]);
+		cout<<"ip"<<i+1<<":"<<ip[i]<<endl;
+	}
 	for(int i = 0;i < COMPUTER_NUMBER;i++)
 		cout<<ip[i]<<endl;
 	fclose(fr);
@@ -185,6 +188,7 @@ int main()
 		}
 		FILE * fw = fdopen(sockfd,"w");
 		fprintf(fw,"%d\n",n);
+		fprintf(fw,"%d\n",p[i].statues.size());
 		for(int j = 0;i < p[i].statues.size();j++)
 		{
 			fprintf(fw,"%d %d %d %d\n",p[i].statues[j].point_1.x,p[i].statues[j].point_1.y,p[i].statues[j].point_2.x,p[i].statues[j].point_2.y);
