@@ -36,7 +36,7 @@ int COMPUTER_NUMBER = 2;
 const int PORT_NUMBER = 10000;
 const int SERVER_PORT_NUMBER = 10001;
 int server_socket_id;
-vector<parameter> p(COMPUTER_NUMBER);//要传给各计算机的参数
+vector<parameter> p;//要传给各计算机的参数
 
 void search(vector<vector<int> >,int,vector<point>,vector<statue> &);
 void * thread_function(void*);
@@ -159,6 +159,12 @@ int main()
 	cin>>n;
 	FILE * fr = fopen("ip.txt","r");
 	fscanf(fr,"%d",&COMPUTER_NUMBER);
+	for(int i = 0;i < COMPUTER_NUMBER;i++)
+	{
+		struct parameter par;
+		p.push_back(par);
+	}
+
 	distribution(n,COMPUTER_NUMBER);
 	//读取ip地址
 	char ip[COMPUTER_NUMBER][30];
