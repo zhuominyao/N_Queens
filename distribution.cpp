@@ -280,7 +280,10 @@ void * thread_function(void * p)
 
 	long sum = 0;
 	for(int i = 0;i < COMPUTER_NUMBER;i++)
+	{
+		cout<<i+1<<":"<<count_array[i]<<endl;
 		sum = sum + count_array[i];
+	}
 
 	cout<<"there are "<<sum<<" kinds of different ways"<<endl;
 }
