@@ -8,7 +8,7 @@
 
 using namespace std;
 
-#define REPEAT_TIME 10000
+#define REPEAT_TIME 100
 
 pthread_mutex_t stdio_mutex;
 pthread_mutex_t count_mutex;
