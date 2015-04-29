@@ -12,6 +12,8 @@
 #include <ifaddrs.h>
 #include <sys/types.h>
 #include <netinet/in.h>
+#include <map>
+#include <utility>
 
 using namespace std;
 
@@ -20,11 +22,12 @@ const int SERVER_PORT_NUMBER = 10001;
 const int MAX_LENGTH = 512;
 const int THREAD_NUMBER = 4;
 
-long count = 0;
+unsigned long count = 0L;
 int queen_number = 8;
 int fd;
 struct sockaddr_in addr;
 socklen_t len;
+map<pthread_t,unsigned long> count_map;
 
 pthread_mutex_t stdio_mutex;
 pthread_mutex_t count_mutex;
@@ -140,8 +143,8 @@ int main()
 	gettimeofday(&start,NULL);
 	solve_n_queens_with_multithread();
 	gettimeofday(&end,NULL);
-	multi_thread_timeuse = 1000000*(end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec);
-	cout<<"time use:"<<multi_thread_timeuse/1000000<<endl;
+	multi_thread_timeuse = (end.tv_sec - start.tv_sec) * 1.0;//时间只精确到秒
+	cout<<"time use:"<<multi_thread_timeuse<<endl;
 }
 
 void solve_n_queens_with_multithread()
@@ -163,6 +166,7 @@ void solve_n_queens_with_multithread()
 			index++;
 		}
 		pthread_create(&tid_array[i],NULL,thread_function,thread_p);
+		count_map.insert(pair<pthread_t,int>(tid_array[i],0));
 	}
 	
 	for(int i = 0;i < THREAD_NUMBER;i++)
@@ -173,7 +177,6 @@ void solve_n_queens_with_multithread()
 	char send_back_address[30];
 	FILE * fr = fopen("receive_ip.txt","r");
 	fscanf(fr,"%s",send_back_address);
-	cout<<"send_back_address:"<<send_back_address<<endl;
 	addr.sin_addr.s_addr = inet_addr(send_back_address);
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(SERVER_PORT_NUMBER);
@@ -205,7 +208,6 @@ void * thread_function(void * p)
 		}
 		solution[thread_p->statues[i].point_1.y][thread_p->statues[i].point_1.x] = 1;
 		solution[thread_p->statues[i].point_2.y][thread_p->statues[i].point_2.x] = 1;
-		
 		solve(solution,2);
 	}
 	free(thread_p);
@@ -224,10 +226,8 @@ void solve(vector<vector<int> > & solution,int n)
 			cout<<endl;
 		}
 		cout<<endl;
-		*/
-
 		pthread_mutex_unlock(&stdio_mutex);
-
+		*/
 		pthread_mutex_lock(&count_mutex);
 		count++;
 		pthread_mutex_unlock(&count_mutex);

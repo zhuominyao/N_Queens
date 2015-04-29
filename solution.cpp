@@ -8,7 +8,7 @@
 
 using namespace std;
 
-#define REPEAT_TIME 1
+#define REPEAT_TIME 10000
 
 pthread_mutex_t stdio_mutex;
 pthread_mutex_t count_mutex;
@@ -199,7 +199,7 @@ int main()
 	float single_thread_timeuse;
 	float multi_thread_timeuse;
 	pthread_mutex_init(&stdio_mutex,NULL);
-	pthread_mutex_init(&stdio_mutex,NULL);
+	pthread_mutex_init(&count_mutex,NULL);
     cout<<"please input how many queens are there?"<<endl;
     cin>>n;
 	cout<<"please input how many threads to create?(at most 8)"<<endl;
